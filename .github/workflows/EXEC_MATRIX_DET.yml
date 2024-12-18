@@ -9,10 +9,23 @@ jobs:
     permissions:
       issues: write
     steps:
-      - name: Create exercise
-        run: gh issue edit "$NUMBER" -t "$BODY"
+      - uses: actions/checkout@v4
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r scripts/requirements.txt
+      - name: Generate exercise
+        id: generator-exercise
+        run: python scripts/exec_matrix_det.py >> "$GITHUB_OUTPUT"
+      - name: Upgrade issue
+        run: gh issue edit "$NUMBER" -t "$TITLE" -b "$BODY"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_REPO: ${{ github.repository }}
           NUMBER: ${{ github.event.issue.number }}
-          BODY: Matrix Determinant ${{ github.event.issue.created_at }}
+          TITLE: Matrix Determinant ${{ github.event.issue.created_at }}
+          BODY: ${{ steps.generator-exercise.outputs }}
