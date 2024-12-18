@@ -1,8 +1,7 @@
 name: Create an exercise to find the determinant of a matrix
 on:
   issues:
-    types:
-      - opened
+    types: [opened]
 jobs:
   add-comment:
     if: github.event.issue.title.name == 'matrix det'
