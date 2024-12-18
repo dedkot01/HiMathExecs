@@ -4,7 +4,7 @@ on:
     types: [opened]
 jobs:
   add-comment:
-    if: github.event.issue.title == 'matrix det'
+    if: github.event.issue.labels.name == 'matrix det'
     runs-on: ubuntu-latest
     permissions:
       issues: write
