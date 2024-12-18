@@ -2,10 +2,10 @@ name: Create an exercise to find the determinant of a matrix
 on:
   issues:
     types:
-      - labeled
+      - opened
 jobs:
   add-comment:
-    if: github.event.label.name == 'matrix det'
+    if: github.event.title.name == 'matrix det'
     runs-on: ubuntu-latest
     permissions:
       issues: write
