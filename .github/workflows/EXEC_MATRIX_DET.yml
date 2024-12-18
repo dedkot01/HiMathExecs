@@ -20,12 +20,11 @@ jobs:
           pip install -r scripts/requirements.txt
       - name: Generate exercise
         id: generator-exercise
-        run: python scripts/exec_matrix_det.py >> "$GITHUB_OUTPUT"
+        run: python scripts/exec_matrix_det.py >> $GITHUB_STEP_SUMMARY
       - name: Upgrade issue
-        run: gh issue edit "$NUMBER" -t "$TITLE" -b "$BODY"
+        run: gh issue edit "$NUMBER" -t "$TITLE"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_REPO: ${{ github.repository }}
           NUMBER: ${{ github.event.issue.number }}
           TITLE: Matrix Determinant ${{ github.event.issue.created_at }}
-          BODY: ${{ steps.generator-exercise.outputs }}
