@@ -1,0 +1,19 @@
+name: Create an exercise to find the determinant of a matrix
+on:
+    issues:
+        types:
+            - labeled
+jobs:
+    if: github.event.label.name == 'matrix det'
+    runs-on: ubuntu-latest
+    permissions:
+        issues: write
+    steps:
+        - name: Create exercise
+          run: gh issue comment "$NUMBER" --body "$BODY"
+          env:
+            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            GH_REPO: ${{ github.repository }}
+            NUMBER: ${{ github.event.issue.number }}
+            BODY: >
+                This my first action!
