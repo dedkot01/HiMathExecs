@@ -19,11 +19,18 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r scripts/requirements.txt
       - name: Generate exercise
-        run: echo "exercise_text=$(python scripts/exec_matrix_det.py)" >> "$GITHUB_ENV"
+        id: generate-exercise
+        run: |
+          {
+            echo 'EXERCISE_TEXT<<EOF'
+            python scripts/exec_matrix_det.py
+            echo EOF
+          } >> "$GITHUB_OUTPUT"
       - name: Update issue
-        run: gh issue edit "$NUMBER" -t "$TITLE" -b "$exercise_text"
+        run: gh issue edit "$NUMBER" -t "$TITLE" -b "$EXERCISE_TEXT"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_REPO: ${{ github.repository }}
           NUMBER: ${{ github.event.issue.number }}
           TITLE: Matrix Determinant ${{ github.event.issue.created_at }}
+          EXERCISE_TEXT: ${{ steps.generate-exercise.outputs.EXERCISE_TEXT }}
