@@ -21,10 +21,9 @@ jobs:
       - name: Generate exercise
         id: generate-exercise
         run: |
-          echo "$DIFFICULTY"
           {
             echo 'EXERCISE_TEXT<<EOF'
-            python scripts/exec_matrix_det.py
+            python scripts/exec_matrix_det.py "$DIFFICULTY"
             echo EOF
           } >> "$GITHUB_OUTPUT"
         env:
