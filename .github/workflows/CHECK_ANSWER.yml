@@ -4,7 +4,7 @@ on:
     types: [created]
 jobs:
   check-answer:
-    if: contains(github.event.issue.labels.*.name, 'matrix det') && contains(github.event.issue.assignees, github.event.comment.user.login)
+    # if: contains(github.event.issue.labels.*.name, 'matrix det') && contains(github.event.issue.assignees, github.event.comment.user.login)
     runs-on: ubuntu-latest
     permissions:
       issues: write
