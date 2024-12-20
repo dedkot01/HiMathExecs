@@ -1,3 +1,5 @@
+import sys
+
 import numpy as np
 
 
@@ -17,7 +19,15 @@ def matrix_to_latex(matrix: np.ndarray) -> str:
 
 
 if __name__ == "__main__":
-    size = 4
+    difficulty: str = sys.argv[1]
+
+    difficultys = {
+        "easy": 2,
+        "medium": 3,
+        "hard": 4,
+    }
+    size = difficulty[difficulty]
+
     matrix, determinant = generate_matrix_and_determinant(size)
 
     print(
