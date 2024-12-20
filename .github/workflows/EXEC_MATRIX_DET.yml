@@ -27,10 +27,15 @@ jobs:
             echo EOF
           } >> "$GITHUB_OUTPUT"
       - name: Update issue
-        run: gh issue edit "$NUMBER" -t "$TITLE" -b "$EXERCISE_TEXT"
+        run: |
+          gh issue edit "$NUMBER" \
+            -t "$TITLE" \
+            -b "$EXERCISE_TEXT" \
+            --add-assignee "$ASSIGNEE"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_REPO: ${{ github.repository }}
           NUMBER: ${{ github.event.issue.number }}
           TITLE: Matrix Determinant ${{ github.event.issue.created_at }}
           EXERCISE_TEXT: ${{ steps.generate-exercise.outputs.EXERCISE_TEXT }}
+          ASSIGNEE: ${{ github.repository_owner }}
