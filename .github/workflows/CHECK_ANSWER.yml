@@ -1,0 +1,21 @@
+name: Check the answer to the exercise
+on:
+  issue_comment:
+    types: [created]
+jobs:
+  check-answer:
+    if: contains(github.event.issue.labels.*.name, 'matrix det') && contains(github.event.issue.assignees, github.event.comment.user.login)
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Get answer
+        id: get-answer
+        run: |
+          echo 'ANSWER=$ISSUE_BODY grep -oP "(?<=<summary>Answer</summary><p>).*(?=</p>)"' >> "$GITHUB_OUTPUT"
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
+      - name: The answer is correct
+        if: steps.get-answer.outputs.ANSWER == github.event.comment.body
+        run: |
+          gh issue close "$NUMBER"
