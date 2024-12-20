@@ -26,7 +26,7 @@ if __name__ == "__main__":
         "medium": 3,
         "hard": 4,
     }
-    size = difficulty[difficulty]
+    size = difficultys[difficulty]
 
     matrix, determinant = generate_matrix_and_determinant(size)
 
