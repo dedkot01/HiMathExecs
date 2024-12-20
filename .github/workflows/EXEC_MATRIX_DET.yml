@@ -21,11 +21,14 @@ jobs:
       - name: Generate exercise
         id: generate-exercise
         run: |
+          echo "$DIFFICULTY"
           {
             echo 'EXERCISE_TEXT<<EOF'
             python scripts/exec_matrix_det.py
             echo EOF
           } >> "$GITHUB_OUTPUT"
+        env:
+          DIFFICULTY: ${{ github.event.issue.labels.name }}
       - name: Update issue
         run: |
           gh issue edit "$NUMBER" \
