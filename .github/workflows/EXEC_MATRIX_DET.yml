@@ -28,7 +28,7 @@ jobs:
             echo EOF
           } >> "$GITHUB_OUTPUT"
         env:
-          DIFFICULTY: ${{ github.event.issue.labels.name }}
+          DIFFICULTY: ${{ github.event.issue.labels }}
       - name: Update issue
         run: |
           gh issue edit "$NUMBER" \
