@@ -12,7 +12,7 @@ jobs:
       - name: Get answer
         id: get-answer
         run: |
-          echo 'ANSWER=$ISSUE_BODY grep -oP "(?<=<summary>Answer</summary><p>).*(?=</p>)"' >> "$GITHUB_OUTPUT"
+          echo 'ANSWER=($ISSUE_BODY grep -oP "(?<=<summary>Answer</summary><p>).*(?=</p>)")' >> "$GITHUB_OUTPUT"
           echo $ANSWER
         env:
           ISSUE_BODY: ${{ github.event.issue.body }}
