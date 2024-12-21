@@ -18,7 +18,7 @@ jobs:
       - name: The answer is correct
         if: steps.get-answer.outputs.ANSWER == github.event.comment.body
         run: |
-          gh issue close "$NUMBER"
+          gh issue close $NUMBER
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NUMBER: ${{ github.event.issue.number }}
