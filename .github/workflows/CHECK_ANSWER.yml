@@ -16,11 +16,6 @@ jobs:
         env:
           ISSUE_BODY: ${{ github.event.issue.body }}
       - name: The answer is correct
-        # if: steps.get-answer.outputs.ANSWER == github.event.comment.body
+        if: steps.get-answer.outputs.ANSWER == github.event.comment.body
         run: |
-          echo "$USER_ANSWER"
-          echo "$ANSWER"
-          # gh issue close "$NUMBER"
-        env:
-          USER_ANSWER: ${{ github.event.comment.body }}
-          ANSWER: ${{ steps.get-answer.outputs.ANSWER }}
+          gh issue close "$NUMBER"
