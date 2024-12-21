@@ -12,9 +12,7 @@ jobs:
       - name: Get answer
         id: get-answer
         run: |
-          ANSWER=$(grep -oP "(?<=<summary>Answer</summary><p>).*(?=</p>)" <<< $ISSUE_BODY)
-          echo $ANSWER
-          echo "ANSWER=$ANSWER" >> "$GITHUB_OUTPUT"
+          echo "ANSWER=$(grep -oP "(?<=<summary>Answer</summary><p>).*(?=</p>)" <<< $ISSUE_BODY)" >> "$GITHUB_OUTPUT"
         env:
           ISSUE_BODY: ${{ github.event.issue.body }}
       - name: The answer is correct
