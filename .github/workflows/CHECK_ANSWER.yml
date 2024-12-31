@@ -4,7 +4,7 @@ on:
     types: [created]
 jobs:
   check-answer:
-    if: contains(github.event.issue.labels.*.name, 'exec:matrix-det')
+    if: startsWith(github.event.issue.labels.*.name, 'exec:')
     runs-on: ubuntu-24.04
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

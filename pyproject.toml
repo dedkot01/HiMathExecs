@@ -1,0 +1,55 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "hi-math-execs"
+dynamic = ["version"]
+description = "Exercise generator for higher mathematics"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [
+  { name = "Dmitry Zhdanov", email = "dmitry.zhdanov01@gmail.com" },
+]
+dependencies = [
+    "numpy==2.2.*",
+    "typer==0.15.*",
+]
+
+[project.scripts]
+generate-exec-matrix-det = "hi_math_execs.exec_matrix_det:app"
+
+[tool.hatch.version]
+path = "hi_math_execs/__init__.py"
+
+[tool.ruff]
+exclude = [
+    ".venv",
+]
+line-length = 80
+indent-width = 4
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+    "ANN201",
+    "CPY001",
+    "D",
+    "PLR2004",
+    "RUF002",
+    "RUF003",
+    "S101",
+    "S113",
+    "T201",
+]
+fixable = ["ALL"]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]
+
+[tool.ruff.lint.flake8-quotes]
+inline-quotes = "double"
+
+[tool.ruff.format]
+indent-style = "space"
