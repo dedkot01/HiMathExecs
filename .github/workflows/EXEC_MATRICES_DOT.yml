@@ -1,0 +1,44 @@
+name: Create an exercise to multiply two matrices
+on:
+  issues:
+    types: [opened]
+jobs:
+  exec-matrces-dot:
+    if: contains(github.event.issue.labels.*.name, 'exec:matrices-dot')
+    runs-on: ubuntu-24.04
+    permissions:
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install .
+      - name: Generate an exercise
+        id: generate-exercise
+        run: |
+          {
+            echo 'EXERCISE_TEXT<<EOF'
+            generate-exec-matrices-dot --difficulty "$DIFFICULTY"
+            echo EOF
+          } >> "$GITHUB_OUTPUT"
+        env:
+          DIFFICULTY:
+            ${{ contains(github.event.issue.labels.*.name, 'difficulty:easy') && 'easy' || contains(github.event.issue.labels.*.name, 'difficulty:medium') && 'medium' || 'hard' }}
+      - name: Update issue
+        run: |
+          gh issue edit "$NUMBER" \
+            -t "$TITLE" \
+            -b "$EXERCISE_TEXT" \
+            --add-assignee "$ASSIGNEE"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          NUMBER: ${{ github.event.issue.number }}
+          TITLE: '[${{ github.event.issue.created_at }}]'
+          EXERCISE_TEXT: ${{ steps.generate-exercise.outputs.EXERCISE_TEXT }}
+          ASSIGNEE: ${{ github.repository_owner }}

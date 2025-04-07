@@ -18,6 +18,7 @@ dependencies = [
 
 [project.scripts]
 generate-exec-matrix-det = "hi_math_execs.exec_matrix_det:app"
+generate-exec-matrices-dot = "hi_math_execs.exec_matrices_dot:app"
 
 [tool.hatch.version]
 path = "hi_math_execs/__init__.py"
