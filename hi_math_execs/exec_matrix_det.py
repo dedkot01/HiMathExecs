@@ -4,6 +4,7 @@ import numpy as np
 import typer
 
 from hi_math_execs.constants import Difficulty
+from hi_math_execs.utils import matrix_to_latex
 
 app = typer.Typer()
 
@@ -16,14 +17,6 @@ def generate_matrix_and_determinant(size: int) -> tuple[np.ndarray, int]:
     determinant = round(np.linalg.det(matrix))
 
     return matrix, determinant
-
-
-def matrix_to_latex(matrix: np.ndarray) -> str:
-    latex_str = r"\begin{bmatrix}"
-    for row in matrix:
-        latex_str += "&".join(map(str, row)) + "\\\\\n"
-    latex_str += r"\end{bmatrix}"
-    return rf"{latex_str}"
 
 
 @app.command()
