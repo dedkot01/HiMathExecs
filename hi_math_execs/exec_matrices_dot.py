@@ -12,16 +12,16 @@ app = typer.Typer()
 def generate_two_matrices(size: int) -> tuple[np.ndarray, np.ndarray]:
     rng = np.random.default_rng()
 
-    size_1, size_2 = rng.integers(
+    max_size = max(size, 2)
+    min_size = rng.integers(
         low=max(size - 1, 1),
-        high=max(size, 2),
-        size=2,
+        high=max_size,
         endpoint=True,
     )
     matrices = rng.integers(
         low=-9,
         high=10,
-        size=(2, size_1, max(size_2, 2)),
+        size=(2, min_size, max_size),
     )
 
     return matrices[0], matrices[1].T
